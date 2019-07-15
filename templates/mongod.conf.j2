@@ -47,6 +47,13 @@ storage:
   preallocDataFiles: {{ mongodb_storage_prealloc | to_nice_json }}
   smallFiles: {{ mongodb_storage_smallfiles | to_nice_json }}
   {% endif %}
+{%- if mongodb_storage_engine == 'wiredTiger' %}
+{% if mongodb_storage_engine_wiredTiger_cacheSize is defined %}
+wiredTiger:
+    engineConfig:
+        cacheSizeGB: {{ mongodb_storage_engine_wiredTiger_cacheSize }}
+{% endif %}
+{% endif %}
 
 systemLog:
   destination: {{ mongodb_systemlog_destination }}
