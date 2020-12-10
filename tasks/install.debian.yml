@@ -25,10 +25,10 @@
 
 - name: Fail when used wrong mongodb_version variable with Ubuntu 18.04
   fail:
-    msg: "mongodb_version variable should be '4.0' or '4.2', or else mongodb_package should be 'mongodb' for Ubuntu 18.04"
+    msg: "mongodb_version variable should be '3.4' or '4.0' or '4.2', or else mongodb_package should be 'mongodb' for Ubuntu 18.04"
   when:
     - mongodb_package == 'mongodb-org'
-    - (mongodb_major_version != '4.0' and mongodb_major_version != '4.2')
+    - (mongodb_major_version != '3.4' and mongodb_major_version != '4.0' and mongodb_major_version != '4.2')
     - ansible_distribution_release == "bionic"
 
 - name: Fail when used wrong mongodb_version variable
