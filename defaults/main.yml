@@ -2,7 +2,7 @@
 
 mongodb_package: mongodb-org
 mongodb_package_state: present
-mongodb_version: "4.2"
+mongodb_version: "3.4"
 mongodb_apt_keyserver: keyserver.ubuntu.com
 mongodb_apt_key_id:
   "3.2": "42F3E95A2C4F08279C4960ADD68FA50FEA312927"
@@ -44,7 +44,9 @@ mongodb_net_ssl_host: ""                         # Valid ssl hostname
 ## processManagement Options
 # Fork server process
 # Enabled by default for RedHat as the init scripts assume forking is enabled.
-mongodb_processmanagement_fork: "{{ 'RedHat' == ansible_os_family }}"
+#mongodb_processmanagement_fork: "{{ 'RedHat' == ansible_os_family }}"
+mongodb_processmanagement_fork: true
+mongodb_pidfile_path: "/var/run/mongodb/mongod.pid"
 
 ## security Options
 # Disable or enable security. Possible values: 'disabled', 'enabled'
@@ -53,7 +55,7 @@ mongodb_security_keyfile: /etc/mongodb-keyfile   # Specify path to keyfile with 
 mongodb_security_javascript_enabled: false
 
 ## storage Options
-mongodb_storage_dbpath: /data/db                 # Directory for datafiles
+mongodb_storage_dbpath: /var/lib/mongo           # Directory for datafiles
 mongodb_storage_dirperdb: false                  # Use one directory per DB
 
 # The storage engine for the mongod database
@@ -84,9 +86,9 @@ mongodb_operation_profiling_mode: "off"
 mongodb_cloud_monitoring_free_state: "runtime"
 
 ## replication Options
-mongodb_replication_replset: ""                   # Enable replication
+mongodb_replication_replset: "rpls0Config"        # Enable replication
 mongodb_replication_replindexprefetch: "all"      # specify index prefetching behavior (if secondary) [none|_id_only|all]
-mongodb_replication_oplogsize: 1024               # specifies a maximum size in megabytes for the replication operation log
+mongodb_replication_oplogsize: 20480              # specifies a maximum size in megabytes for the replication operation log
 
 # MMS Agent
 mongodb_mms_agent_pkg: https://cloud.mongodb.com/download/agent/monitoring/mongodb-mms-monitoring-agent_7.2.0.488-1_amd64.ubuntu1604.deb
@@ -126,3 +128,5 @@ mongodb_root_backup_password: passw0rd
 
 # setParameter config
 mongodb_set_parameters:
+
+mongodb_sharding_cluster_role: configsrv
